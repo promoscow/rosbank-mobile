@@ -7,6 +7,7 @@ import ru.xpendence.rosbankmobile.dto.locate
 import ru.xpendence.rosbankmobile.mapper.CityMapper
 import ru.xpendence.rosbankmobile.repository.CityRepository
 import ru.xpendence.rosbankmobile.util.CityUtils
+import ru.xpendence.rosbankmobile.util.logger
 import javax.persistence.EntityNotFoundException
 
 /**
@@ -17,6 +18,9 @@ import javax.persistence.EntityNotFoundException
  */
 @Service
 class CityServiceImpl : CityService {
+
+    val log = logger<CityServiceImpl>()
+
     @Autowired
     private lateinit var repository: CityRepository
 
@@ -25,9 +29,11 @@ class CityServiceImpl : CityService {
 
     override fun getByPhone(phone: String): CityDto {
         val city = recognizeCityByNumber(phone)
-        return mapper.toDto(repository.getByCity(city)
+        val location = mapper.toDto(repository.getByCity(city)
                 ?: repository.getByRegion(city)
                 ?: throw EntityNotFoundException("Город $city не найден.")).locate()
+        log.info("location: $location")
+        return location
     }
 
     override fun recognizeCityByNumber(phone: String): String = CityUtils.recognizeCity(phone)
