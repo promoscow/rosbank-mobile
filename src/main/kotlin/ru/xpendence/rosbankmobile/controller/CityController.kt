@@ -22,5 +22,5 @@ class CityController {
     private lateinit var service: CityService
 
     @GetMapping
-    fun getByCity(city: String): ResponseEntity<CityDto> = ResponseEntity.ok(service.getByCity(city))
+    fun getByPhone(phone: String): ResponseEntity<CityDto> = ResponseEntity.ok(service.getByPhone(phone))
 }

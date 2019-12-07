@@ -10,5 +10,7 @@ import ru.xpendence.rosbankmobile.dto.CityDto
  */
 interface CityService {
 
-    fun getByCity(city: String): CityDto
+    fun getByPhone(phone: String): CityDto
+
+    fun recognizeCityByNumber(phone: String): String
 }
